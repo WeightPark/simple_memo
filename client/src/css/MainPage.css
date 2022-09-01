@@ -1,0 +1,15 @@
+.flex-main-container {
+    border-radius: 5px;
+    height: 100vh;
+}
+
+.flex-head-container {
+    width: 100%;
+    height: 12%;
+}
+
+.flex-content-container {
+    background-color: #fff;
+    width: 100%;
+    height: 88%;
+}

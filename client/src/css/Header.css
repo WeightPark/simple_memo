@@ -1,0 +1,18 @@
+/* 나눔스퀘어 글씨체 사용 */
+@import url(https://hangeul.pstatic.net/hangeul_static/css/NanumSaRangHaeADeur.css); 
+
+.flex-container {
+    font-family: NanumSaRangHaeADeur;
+    background-color: rgb(127, 255, 244);
+    color: rgb(0, 0, 0);
+    width: 100%;
+    height: 100%;
+    font-size: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.line {
+    /* border: 1px solid black; */
+}
