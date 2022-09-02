@@ -1,0 +1,110 @@
+/* 나눔스퀘어 글씨체 - 성실체 사용 */
+@import url(https://hangeul.pstatic.net/hangeul_static/css/NanumSeongSirCe.css);
+
+.flex-main-container {
+    background-color: #f8f8d9;
+    height: 130vh;
+    -webkit-user-select: none;          /* none 4가지는 드래그 방지 */
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.flex-head-container {
+    width: 100%;
+    height: 10%;                        /* head 부분의 높이가 html전체에서 12%가 되도록 설정 */
+}
+
+.flex-content-container {
+    background-color: #f8f8d9;
+    width: 100%;
+    height: 90%;
+}
+
+.input_underline {                      
+    background-color: #f8f8d9;        /* ID, PASSWORD 입력 칸 border 수정 */
+    border-left-width:0; 
+    border-right-width:0; 
+    border-top-width:0; 
+    border-bottom-width:1;
+    outline: none;
+    width: 360px;
+    font-size: 25px;
+    font-family: NanumSeongSirCe;
+    line-height: 50px;                  /* line-height - 글씨체 변경 후 밑 부분 잘림 방지 */
+}
+
+.input_underline::placeholder {
+    line-height: 50px;
+}
+
+.flex-button-container > .login_button {
+    width: 364px;
+    margin: auto;
+    -webkit-appearance: none;           /* 버튼 css default값 제거 */
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #f8f8d9;
+    font-size: 40px;
+    font-family: NanumSeongSirCe;
+    cursor: pointer;                    /* 버튼에 마우스 올릴 시 손가락 모양 적용 */
+    border: 0;                          /* button 테두리 제거 */
+}
+
+.flex-id-save-container {
+    display: flex;
+    font-size: 30px;
+    font-weight: 600;
+    justify-content: flex-start;
+}
+
+.id-save-switch-button {
+    position: relative;
+    display: inline-block;
+    width: 55px;
+    height: 37px;
+}
+
+.id-save-switch-button input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.onoff-switch {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius:20px;
+    background-color: #ccc;
+    box-shadow: inset 1px 5px 1px #999;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.onoff-switch:before {
+    position: absolute;
+    content: "";
+    height: 27px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #fff;
+    -webkit-transition: .5s;
+    transition: .4s;
+    border-radius:20px;
+}
+
+.id-save-switch-button input:checked + .onoff-switch {
+    background-color: #F2D522;
+    box-shadow: inset 1px 5px 1px #E3AE56;
+}
+
+.id-save-switch-button input:checked + .onoff-switch:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
