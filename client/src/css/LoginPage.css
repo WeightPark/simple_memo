@@ -21,6 +21,10 @@
     height: 90%;
 }
 
+.flex-login-container {
+    font-weight: bold;
+}
+
 .input_underline {                      
     background-color: #f8f8d9;        /* ID, PASSWORD 입력 칸 border 수정 */
     border-left-width:0; 
@@ -28,32 +32,20 @@
     border-top-width:0; 
     border-bottom-width:1;
     outline: none;
-    width: 360px;
+    width: 300px;
+    height: 50px;
     font-size: 25px;
     font-family: NanumSeongSirCe;
-    line-height: 50px;                  /* line-height - 글씨체 변경 후 밑 부분 잘림 방지 */
+    line-height: 100px;                  /* line-height - 글씨체 변경 후 밑 부분 잘림 방지 */
 }
 
 .input_underline::placeholder {
     line-height: 50px;
 }
 
-.flex-button-container > .login_button {
-    width: 364px;
-    margin: auto;
-    -webkit-appearance: none;           /* 버튼 css default값 제거 */
-    -moz-appearance: none;
-    appearance: none;
-    background-color: #f8f8d9;
-    font-size: 40px;
-    font-family: NanumSeongSirCe;
-    cursor: pointer;                    /* 버튼에 마우스 올릴 시 손가락 모양 적용 */
-    border: 0;                          /* button 테두리 제거 */
-}
-
 .flex-id-save-container {
     display: flex;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 600;
     justify-content: flex-start;
 }
@@ -61,8 +53,8 @@
 .id-save-switch-button {
     position: relative;
     display: inline-block;
-    width: 55px;
-    height: 37px;
+    width: 45px;
+    height: 30px;
 }
 
 .id-save-switch-button input {
@@ -78,7 +70,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    border-radius:20px;
+    border-radius: 30px;
     background-color: #ccc;
     box-shadow: inset 1px 5px 1px #999;
     -webkit-transition: .4s;
@@ -88,9 +80,9 @@
 .onoff-switch:before {
     position: absolute;
     content: "";
-    height: 27px;
-    width: 22px;
-    left: 4px;
+    height: 20px;
+    width: 15px;
+    left: 0px;
     bottom: 4px;
     background-color: #fff;
     -webkit-transition: .5s;
@@ -107,4 +99,17 @@
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
+}
+
+.flex-button-container > .login_button {
+    width: 364px;
+    margin: auto;
+    -webkit-appearance: none;           /* 버튼 css default값 제거 */
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #f8f8d9;
+    font-size: 40px;
+    font-family: NanumSeongSirCe;
+    cursor: pointer;                    /* 버튼에 마우스 올릴 시 손가락 모양 적용 */
+    border: 0;                          /* button 테두리 제거 */
 }

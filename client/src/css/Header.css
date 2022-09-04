@@ -3,7 +3,8 @@
 
 .flex-container {
     font-family: NanumSaRangHaeADeur;
-    background-color: rgb(127, 255, 244);
+    font-weight: bold;
+    background-color: #DAF1DA;
     color: rgb(0, 0, 0);
     width: 100%;
     height: 100%;
@@ -13,6 +14,7 @@
     align-items: center;
 }
 
-.line {
-    /* border: 1px solid black; */
+.navLink {                  /* NavLink의 css 제거 */
+    color: inherit;
+    text-decoration: none;
 }

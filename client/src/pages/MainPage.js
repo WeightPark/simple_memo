@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import Header from "../components/Header"
 import "../css/MainPage.css"
 
@@ -9,7 +10,16 @@ const MainPage = () => {
                 <Header />
             </div>
             <div className="flex-content-container">
-                본문이 들어갈 곳
+                <div>
+                    <NavLink to="/login" className="link">
+                        Sign-in
+                    </NavLink>
+                </div>
+                <div>
+                    <NavLink to="/join" className="link">
+                        Sign-up
+                    </NavLink>
+                </div>
             </div>
         </div>
             

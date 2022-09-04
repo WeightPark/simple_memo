@@ -72,9 +72,9 @@ const LoginPage = () => {
             <Header />
         </div>
         <div className="flex-content-container">
-            <div className="flex-loin-container">
+            <div>
               <form onSubmit={HandleSubmit}>
-                  <div>
+                  <div className="flex-login-container">
                       ID
                   </div>
                   <div>
@@ -86,7 +86,7 @@ const LoginPage = () => {
                       />
                   </div>
                   <br />
-                  <div>
+                  <div className="flex-login-container">
                       PASSWORD
                   </div>
                   <div>
