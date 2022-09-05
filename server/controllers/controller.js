@@ -12,3 +12,17 @@ exports.checkUser = async (req, res) => {
       console.log(err);
     }
   };
+
+exports.checkIdDuplication = async (req, res) => {
+  try {
+    console.log(req.body);
+    const checkIdDup = await model.checkIdDup(req.body);
+    if (checkIdDup !== undefined && checkIdDup.length === 1) {
+      res.send({ result: "fail" });
+    } else {
+      res.send({ result: checkIdDup });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};

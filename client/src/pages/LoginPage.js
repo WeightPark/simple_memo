@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import qs from 'qs';
 import Header from "../components/Header";
-import "../css/LoginPage.css"
+import styles from "../css/LoginPage.module.css"
 
 const LoginPage = () => {
   const [id, setId] = useState("");
@@ -67,14 +67,14 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex-main-container">
-        <div className="flex-head-container">
+    <div className={styles.flex_main_container}>
+        <div className={styles.flex_head_container}>
             <Header />
         </div>
-        <div className="flex-content-container">
+        <div className={styles.flex_content_container}>
             <div>
               <form onSubmit={HandleSubmit}>
-                  <div className="flex-login-container">
+                  <div className={styles.flex_login_container}>
                       ID
                   </div>
                   <div>
@@ -82,11 +82,11 @@ const LoginPage = () => {
                           type="text" 
                           onChange={handleInputId}
                           placeholder={localStorage.getItem('saveId') === null ? "아이디": localStorage.getItem('saveId')}
-                          className="input_underline"
+                          className={styles.input_underline}
                       />
                   </div>
                   <br />
-                  <div className="flex-login-container">
+                  <div className={styles.flex_login_container}>
                       PASSWORD
                   </div>
                   <div>
@@ -94,19 +94,20 @@ const LoginPage = () => {
                           type="password" 
                           onChange={handleInputPw}
                           placeholder="비밀번호"
-                          className="input_underline"
+                          className={styles.input_underline}
                       />
                   </div>
                   <br />
-                  <div className="flex-id-save-container">
-                    <label className="id-save-switch-button">
+                  <div className={styles.flex_id_save_container}>
+                    <label className={styles.id_save_switch_button}>
                       <input type="checkbox" onChange={checkBoxChange} checked={boxChecked}/>
-                      <span className="onoff-switch"></span>
+                      <span className={styles.onoff_switch}></span>
                     </label>
                     <div>아이디 저장</div>
                   </div>
-                  <div className="flex-button-container">
-                    <button type="submit" className="login_button">
+                  <br />
+                  <div className={styles.flex_button_container}>
+                    <button type="submit" className={styles.login_button}>
                       로그인 하기
                     </button>
                   </div>

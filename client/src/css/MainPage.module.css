@@ -1,21 +1,21 @@
 /* 나눔스퀘어 글씨체 사용 - 사랑해 아들 체 */
 @import url(https://hangeul.pstatic.net/hangeul_static/css/NanumSaRangHaeADeur.css); 
 
-.flex-main-container {
-    background-color: #f8f8d9;
+.flex_main_container {
     font-family: NanumSaRangHaeADeur;
     border-radius: 5px;
-    height: 120vh;                  /* vh - 반응형 높이 설정 */
+    height: 100vh;                  /* vh - 반응형 높이 설정 */
 }
 
-.flex-head-container {
+.flex_head_container {
     width: 100%;
     height: 10%;                    /* head 부분의 높이가 html전체에서 12%가 되도록 설정 */
 }
 
-.flex-content-container {
-    background-color: #fff;
+.flex_content_container {
+    background-color: #f8f8d9;
     width: 100%;
+    height: 90%;
     font-size: 50px;
     display: flex;                  /* space-around 프로퍼티 사용을 위한 flexbox 사용 */
     justify-content: space-around;  /* flex-content-item 자식 요소를 flex-content-container 부모 요소 안에서 균등하게 수평 정렬*/

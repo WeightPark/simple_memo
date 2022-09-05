@@ -3,6 +3,11 @@ module.exports = (server) => {
 
     server.post(
         "/user_check",
-        controller.checkUser
+        controller.checkUser,
+    );
+
+    server.post(
+        "/id_duplicate_check",
+        controller.checkIdDuplication
     );
 }
