@@ -11,3 +11,12 @@ exports.checkUser = async (req) => {
     }
   };
 
+exports.checkIdDup = async (req) => {
+  try {
+    const promisePool = connection.promise();
+    const [rows] = await promisePool.query(query.checkIdDup(req));
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};

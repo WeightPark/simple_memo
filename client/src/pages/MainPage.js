@@ -1,22 +1,22 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Header from "../components/Header"
-import "../css/MainPage.css"
+import styles from "../css/MainPage.module.css"
 
 const MainPage = () => {
     return (
-        <div className="flex-main-container">
-            <div className="flex-head-container">
+        <div className={styles.flex_main_container}>
+            <div className={styles.flex_head_container}>
                 <Header />
             </div>
-            <div className="flex-content-container">
+            <div className={styles.flex_content_container}>
                 <div>
-                    <NavLink to="/login" className="link">
+                    <NavLink to="/login" className={styles.link}>
                         Sign-in
                     </NavLink>
                 </div>
                 <div>
-                    <NavLink to="/join" className="link">
+                    <NavLink to="/join" className={styles.link}>
                         Sign-up
                     </NavLink>
                 </div>

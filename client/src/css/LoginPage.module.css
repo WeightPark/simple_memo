@@ -1,8 +1,7 @@
 /* 나눔스퀘어 글씨체 - 성실체 사용 */
 @import url(https://hangeul.pstatic.net/hangeul_static/css/NanumSeongSirCe.css);
 
-.flex-main-container {
-    background-color: #f8f8d9;
+.flex_main_container {
     height: 130vh;
     -webkit-user-select: none;          /* none 4가지는 드래그 방지 */
     -moz-user-select: none;
@@ -10,18 +9,23 @@
     user-select: none;
 }
 
-.flex-head-container {
+.flex_head_container {
     width: 100%;
     height: 10%;                        /* head 부분의 높이가 html전체에서 12%가 되도록 설정 */
 }
 
-.flex-content-container {
+.flex_content_container {
     background-color: #f8f8d9;
+    font-family: NanumSaRangHaeADeur;
     width: 100%;
     height: 90%;
+    font-size: 50px;
+    display: flex;                  /* space-around 프로퍼티 사용을 위한 flexbox 사용 */
+    justify-content: space-around;  /* flex-content-item 자식 요소를 flex-content-container 부모 요소 안에서 균등하게 수평 정렬*/
+    align-items: center;
 }
 
-.flex-login-container {
+.flex_login_container {
     font-weight: bold;
 }
 
@@ -36,34 +40,34 @@
     height: 50px;
     font-size: 25px;
     font-family: NanumSeongSirCe;
-    line-height: 100px;                  /* line-height - 글씨체 변경 후 밑 부분 잘림 방지 */
+    line-height: 100px;                         /* line-height - 글씨체 변경 후 밑 부분 잘림 방지 */
 }
 
-.input_underline::placeholder {
-    line-height: 50px;
-}
-
-.flex-id-save-container {
+.flex_id_save_container {                       /* 아이디 저장 div 컨테이너 */
     display: flex;
     font-size: 25px;
     font-weight: 600;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
-.id-save-switch-button {
+.flex_id_save_container > div { 
+    padding-right: 210px;
+}
+
+.id_save_switch_button {                        /* 아이디 저장 버튼 외부 */
     position: relative;
     display: inline-block;
     width: 45px;
     height: 30px;
 }
 
-.id-save-switch-button input {
+.id_save_switch_button input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-.onoff-switch {
+.onoff_switch {                                 /* 아이디 저장 버튼 내부 스위치 */
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -77,7 +81,7 @@
     transition: .4s;
 }
 
-.onoff-switch:before {
+.onoff_switch:before {
     position: absolute;
     content: "";
     height: 20px;
@@ -90,20 +94,24 @@
     border-radius:20px;
 }
 
-.id-save-switch-button input:checked + .onoff-switch {
+.id_save_switch_button input:checked + .onoff_switch {
     background-color: #F2D522;
     box-shadow: inset 1px 5px 1px #E3AE56;
 }
 
-.id-save-switch-button input:checked + .onoff-switch:before {
+.id_save_switch_button input:checked + .onoff_switch:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
 }
 
-.flex-button-container > .login_button {
-    width: 364px;
-    margin: auto;
+.flex_button_container {
+    display: flex;                      /* space-around 프로퍼티 사용을 위한 flexbox 사용 */
+    justify-content: space-around;     
+}
+
+.login_button {
+    width: 200px;
     -webkit-appearance: none;           /* 버튼 css default값 제거 */
     -moz-appearance: none;
     appearance: none;
@@ -111,5 +119,6 @@
     font-size: 40px;
     font-family: NanumSeongSirCe;
     cursor: pointer;                    /* 버튼에 마우스 올릴 시 손가락 모양 적용 */
-    border: 0;                          /* button 테두리 제거 */
+    border: 1;                          /* button 테두리 제거 */
+    border-radius: 40%;
 }
