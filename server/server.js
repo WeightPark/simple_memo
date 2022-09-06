@@ -31,8 +31,8 @@ if (port === 5000) {
 
     // [CONFIGURE SSL FILE]
     const option = {
-        key: fs.readFileSync(path.join(__dirname, "../keyFile/server.key")),
-        cert: fs.readFileSync(path.join(__dirname, "../keyFile/server.crt"))
+        key: fs.readFileSync(path.join(__dirname, "../../keyFile/server.key")),
+        cert: fs.readFileSync(path.join(__dirname, "../../keyFile/server.crt"))
     };
 
     https.createServer(option, server).listen(port, function() {

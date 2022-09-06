@@ -20,3 +20,13 @@ exports.checkIdDup = async (req) => {
     console.log(error);
   }
 };
+
+exports.insertInfo = async (req) => {
+  try {
+    const promisePool = connection.promise();
+    const [rows] = await promisePool.query(query.insertInfo(req));
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
