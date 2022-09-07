@@ -9,15 +9,12 @@ const path = require("path");
 const cors = require("cors");
 const fs = require("fs");
 
-const port = 443 || 5000;
+const port = 5000 || 443;
 
 server.use(cors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
-server.use(express.static(path.join(__dirname, ))); // static, join에 대한 설명 추가할 것
-// server.get('/', (req,res) => {
-//     res.sendFile(path.join(__dirname, ))
-// });
+server.use(express.static(path.join(__dirname, '../../client/build')));
 
 require('./routes/router')(server);
 
@@ -31,11 +28,16 @@ if (port === 5000) {
 
     // [CONFIGURE SSL FILE]
     const option = {
-        key: fs.readFileSync(path.join(__dirname, "../keyFile/server.key")),
-        cert: fs.readFileSync(path.join(__dirname, "../keyFile/server.crt"))
+        key: fs.readFileSync(path.join(__dirname, "../../keyFile/server.key")),
+        cert: fs.readFileSync(path.join(__dirname, "../../keyFile/server.crt"))
     };
 
     https.createServer(option, server).listen(port, function() {
         console.log("Express server has started on port " + port)
     });
 };
+
+// Client 접속 시 출력되는 첫번째 화면
+server.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+})
