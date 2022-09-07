@@ -57,7 +57,7 @@ const LoginPage = () => {
           window.alert("아이디나 비밀번호를 확인하세요");
           window.location.replace("/login");
         } else if (res.data.result[0] !== undefined) {
-          navigate("/main")
+          navigate("/")
         }
       })
       .catch(function (err) {

@@ -154,7 +154,7 @@ const JoinPage = () => {
                   window.alert("입력된 정보를 다시 확인하세요");
                 } else {
                   window.alert("회원 가입 완료");
-                  navigate("/main");
+                  navigate("/");
                 }
               })
               .catch(function (err) {
