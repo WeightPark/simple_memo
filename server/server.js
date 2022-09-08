@@ -9,12 +9,12 @@ const path = require("path");
 const cors = require("cors");
 const fs = require("fs");
 
-const port = 5000 || 443;
+const port = 443 || 5000;
 
 server.use(cors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
-server.use(express.static(path.join(__dirname, '../../client/build')));
+server.use(express.static(path.join(__dirname, '../client/build')));
 
 require('./routes/router')(server);
 
