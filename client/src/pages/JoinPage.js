@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import qs from 'qs';
-import Header from "../components/Header"
+import Header from "../components/Header.js"
 import styles from "../css/JoinPage.module.css"
 
 const JoinPage = () => {
