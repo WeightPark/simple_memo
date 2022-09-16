@@ -15,12 +15,24 @@ exports.checkUser = async (req, res) => {
 
 exports.checkIdDuplication = async (req, res) => {
   try {
-    console.log(req.body);
     const checkIdDup = await model.checkIdDup(req.body);
     if (checkIdDup !== undefined && checkIdDup.length === 1) {
       res.send({ result: "fail" });
     } else {
       res.send({ result: checkIdDup });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.insertionUserInfo = async (req, res) => {
+  try {
+    const insertInfo = await model.insertInfo(req.body);
+    if (insertInfo !== undefined && insertInfo.affectedRows === 1) {
+      res.send({ result: insertInfo });
+    } else {
+      res.send({ result: "fail" });
     }
   } catch (err) {
     console.log(err);
