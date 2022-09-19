@@ -1,0 +1,28 @@
+router.post('/login', function(req, res, next) {
+	console.log("REST API Post Method - Member Login And JWT Sign");
+	// const id = req.body.id;
+	// const password = req.body.password;
+	const checkUser = await ~;
+	if (checkUser !== undefined && checkUser.length === 1) {
+		const secret = randToken.generate(16);
+		jwt.sign({
+			id : id,
+			},
+			secret,
+			{
+			expiresIn : '60m'
+			},
+			(err, token) => {
+				if (err) {
+					console.log(err);
+					res.status(401).json({success:false, errormessage:'token sign fail'});
+				} else {
+					res.json({success:true, accessToken:token});
+				}
+			})
+	} else {
+		res.status(401).json({success:false, errormessage:'id and password are not identical'});
+	} else {
+		res.status(401).json({success:false, errormessage:'id and password are not identical'});
+	}	
+});

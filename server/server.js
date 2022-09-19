@@ -9,7 +9,8 @@ const path = require("path");
 const cors = require("cors");
 const fs = require("fs");
 
-const port = 5000 || 443;
+// 추후 client || dev mode에 따른 접속 port 구분
+const port = 443 || 5000;
 
 server.use(cors());
 server.use(express.json());
@@ -42,3 +43,4 @@ if (port === 5000) {
 server.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 })
+

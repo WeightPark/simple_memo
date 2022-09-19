@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const model = require('../models/model');
 
 exports.checkUser = async (req, res) => {
