@@ -9,8 +9,6 @@ const path = require("path");
 const cors = require("cors");
 const fs = require("fs");
 
-// 
-
 // 추후 client || dev mode에 따른 접속 port 구분
 const port = 443 || 5000;
 
@@ -18,6 +16,7 @@ server.use(cors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.use(express.static(path.join(__dirname, '../client/build')));
+server.use(express.static(path.join(__dirname, '../../client/build')));
 
 require('./routes/router')(server);
 
