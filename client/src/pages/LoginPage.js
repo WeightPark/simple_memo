@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import qs from 'qs';
@@ -11,12 +11,12 @@ const LoginPage = () => {
   const [boxChecked, setBoxChecked] = useState(false);
 
   useEffect(() => {
-    if(localStorage.getItem("saveCheckBox") === null) {
+    if (localStorage.getItem("saveCheckBox") === null) {
       setBoxChecked(false);
     } else {
       setBoxChecked(true);
     }
-  }, [])
+  }, []);
 
   const handleInputId = (e) => {
     setId(e.target.value);
@@ -33,13 +33,12 @@ const LoginPage = () => {
   let navigate = useNavigate();
 
   const HandleSubmit = (e) => {
-    console.log(localStorage)
     e.preventDefault();
     if (boxChecked === true) {
       localStorage.setItem("saveId", id);
       localStorage.setItem("saveCheckBox", boxChecked);
     } else {
-      localStorage.removeItem("saveId")
+      localStorage.removeItem("saveId");
       localStorage.removeItem("saveCheckBox");
     }
     const userData = {
@@ -48,16 +47,20 @@ const LoginPage = () => {
     };
     axios({
       method: "post",
-      url: "https://localhost:443/user_check",
+      url: "http://localhost:5000/user_check",
       headers: { "Content-type": "application/x-www-form-urlencoded" },
       data: qs.stringify(userData),
     })
       .then((res) => {
+        console.log(res);
         if (res.data.result === "fail") {
           window.alert("아이디나 비밀번호를 확인하세요");
           window.location.replace("/login");
-        } else if (res.data.result[0] !== undefined) {
-          navigate("/")
+        } else if (res.data.code === 200) {
+          // const accessToken = res.data.token;
+          // API 요청하는 콜마다 헤더에 accessToken을 담아 보내도록 설정
+          // axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+          navigate("/memo");
         }
       })
       .catch(function (err) {
@@ -68,56 +71,59 @@ const LoginPage = () => {
 
   return (
     <div className={styles.flex_main_container}>
-        <div className={styles.flex_head_container}>
-            <Header />
-        </div>
-        <div className={styles.flex_content_container}>
+      <div>
+        <Header />
+      </div>
+      <div className={styles.flex_content_container}>
+        <div>
+          <form onSubmit={HandleSubmit}>
+            <div className={styles.flex_login_container}>ID</div>
             <div>
-              <form onSubmit={HandleSubmit}>
-                  <div className={styles.flex_login_container}>
-                      ID
-                  </div>
-                  <div>
-                      <input 
-                          type="text" 
-                          onChange={handleInputId}
-                          placeholder={localStorage.getItem('saveId') === null ? "아이디": localStorage.getItem('saveId')}
-                          className={styles.input_underline}
-                      />
-                  </div>
-                  <br />
-                  <div className={styles.flex_login_container}>
-                      PASSWORD
-                  </div>
-                  <div>
-                      <input
-                          type="password" 
-                          onChange={handleInputPw}
-                          placeholder="비밀번호"
-                          className={styles.input_underline}
-                      />
-                  </div>
-                  <br />
-                  <div className={styles.flex_id_save_container}>
-                    <label className={styles.id_save_switch_button}>
-                      <input type="checkbox" onChange={checkBoxChange} checked={boxChecked}/>
-                      <span className={styles.onoff_switch}></span>
-                    </label>
-                    <div>아이디 저장</div>
-                  </div>
-                  <br />
-                  <div className={styles.flex_button_container}>
-                    <button type="submit" className={styles.login_button}>
-                      로그인 하기
-                    </button>
-                  </div>
-                  <br /><br />
-                  <div>
-                      소셜로 간편 로그인 자리
-                  </div>
-                </form>
+              <input
+                type="text"
+                onChange={handleInputId}
+                placeholder={
+                  localStorage.getItem("saveId") === null
+                    ? "아이디"
+                    : localStorage.getItem("saveId")
+                }
+                className={styles.input_underline}
+              />
             </div>
+            <br />
+            <div className={styles.flex_login_container}>PASSWORD</div>
+            <div>
+              <input
+                type="password"
+                onChange={handleInputPw}
+                placeholder="비밀번호"
+                className={styles.input_underline}
+              />
+            </div>
+            <br />
+            <div className={styles.flex_id_save_container}>
+              <label className={styles.id_save_switch_button}>
+                <input
+                  type="checkbox"
+                  onChange={checkBoxChange}
+                  checked={boxChecked}
+                />
+                <span className={styles.onoff_switch}></span>
+              </label>
+              <div>아이디 저장</div>
+            </div>
+            <br />
+            <div className={styles.flex_button_container}>
+              <button type="submit" className={styles.login_button}>
+                로그인 하기
+              </button>
+            </div>
+            <br />
+            <br />
+            <div>소셜로 간편 로그인 자리</div>
+          </form>
         </div>
+      </div>
     </div>
   );
 };

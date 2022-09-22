@@ -1,7 +1,7 @@
 const connection = require('../common/db');
 const query = require('../queries/query');
 
-exports.checkUser = async (req) => {
+exports.userCheck = async (req, res) => {
     try {
       const promisePool = connection.promise();
       const [rows] = await promisePool.query(query.checkUser(req));
@@ -11,7 +11,7 @@ exports.checkUser = async (req) => {
     }
   };
 
-exports.checkIdDup = async (req) => {
+exports.checkIdDup = async (req, res) => {
   try {
     const promisePool = connection.promise();
     const [rows] = await promisePool.query(query.checkIdDup(req));
@@ -21,10 +21,30 @@ exports.checkIdDup = async (req) => {
   }
 };
 
-exports.insertInfo = async (req) => {
+exports.insertInfo = async (req, res) => {
   try {
     const promisePool = connection.promise();
     const [rows] = await promisePool.query(query.insertInfo(req));
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.insertionMemo = async (req, res) => {
+  try {
+    const promisePool = connection.promise();
+    const [rows] = await promisePool.query(query.insertionMemo(req));
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.loadMemo = async () => {
+  try {
+    const promisePool = connection.promise();
+    const [rows] = await promisePool.query(query.loadMemo);
     return rows;
   } catch (error) {
     console.log(error);

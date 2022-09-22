@@ -1,10 +1,8 @@
-const randToken = require('rand-token');
-const jwt = require('jsonwebtoken');
-const e = require('express');
-const secretKey = require('./jwtconfig').secretKey;
-const options = require('./jwtconfig').options;
-const TOKEN_EXPIRED = -3;
-const TOKEN_INVALID = -2;
+// const jwt = require('jsonwebtoken');
+// console.log(module.exports === exports);
 
-let test = randToken.generate(16);
+const days = ["mon", "tues", "wednes", "thurs", "fri"];
+const test = days.map(day => `${day}day`);
+
 console.log(test);
+

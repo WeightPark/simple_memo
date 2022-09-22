@@ -4,6 +4,7 @@
 node_modules/
 .pnp/
 .pnp.js
+package-lock.json/
 
 # testing
 coverage/
@@ -11,8 +12,8 @@ coverage/
 # production
 build/
 
-# file
-server/env/jwtconfig.js
+# env
+server/env/
 
 # misc
 .DS_Store

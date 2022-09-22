@@ -2,22 +2,15 @@
 @import url(https://hangeul.pstatic.net/hangeul_static/css/NanumSeongSirCe.css);
 
 .flex_main_container {                  /* 페이지 전체를 감싸는 container */
-    height: 130vh;
+    height: 100%;
     -webkit-user-select: none;          /* none 4가지는 드래그 방지 */
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
 
-.flex_head_container {                  /* 헤더 부분 container */
-    width: 100%;
-    height: 10%;                        /* head 부분의 높이가 html전체에서 12%가 되도록 설정 */
-}
-
 .flex_content_container {               /* 헤더 부분을 제외한 container */
     background-color: #f8f8d9;
-    width: 100%;
-    height: 90%;
     font-size: 50px;
     padding-top: 70px;
 }

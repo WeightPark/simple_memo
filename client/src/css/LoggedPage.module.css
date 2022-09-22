@@ -1,0 +1,81 @@
+/* 나눔스퀘어 글씨체 - 성실체 사용 */
+@import url(https://hangeul.pstatic.net/hangeul_static/css/NanumSeongSirCe.css);
+
+.main_container {
+    background-color: #f8f8d9;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-auto-rows: 450px;
+}
+
+.memo_container {
+    background-color: #eeeea0;
+    width: 85%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: NanumSaRangHaeADeur;
+}
+
+.memo_title_container {
+    border: 1px solid black;
+    border-left-width:0; 
+    border-right-width:0; 
+    border-top-width:0; 
+    border-bottom-width:1;
+    padding-top: 3%;
+    width: 95%;
+    height: 8%;
+}
+
+.memo_content_container {
+    width: 95%;
+    height: 100%;
+    padding-top: 3%;
+    white-space: pre-line;                              /* 개행 적용 */
+    overflow: auto;                                     /* 메모가 길어지면 scroll 적용 */
+}
+
+.memo_content_container::-webkit-scrollbar {            /* 스크롤바 영역 설정 */
+    width: 10px;
+}
+
+.memo_content_container::-webkit-scrollbar-thumb {      /* 스크롤바 막대 설정 */
+    height: 10%;
+    background-color: rgb(195, 189, 189);
+}
+
+.memo_content_container::-webkit-scrollbar-track {      /* 스크롤바 배경 설정 */
+    background-color: white;
+}
+
+.memo_container > img {
+    max-width: 80px;
+    max-height: 80px;
+    cursor: pointer;
+}
+
+.memo_icon_container > img {
+    max-width: 80px;
+    max-height: 80px;
+    cursor: pointer;
+    margin: 0px 3px 0px 3px;                            /* 이미지 간 간격 조정 */
+}
+
+.memo_icon_container > img:hover + span { 
+    display: block;
+}
+
+.memo_icon_container > span {
+    display: none;
+    position: absolute;
+    margin: 0px 0px 0px 10px;
+}

@@ -1,0 +1,31 @@
+simple_memo 
+
+[문제점]
+1. CSS
+ 1) header navlink 위 아래 줄일 시 header크기는 작아지는데 글씨는 그대로임
+ 2) login 페이지에서 content-container 창 크기 줄일 시 안에 내용물 전부 튀어나옴 
+    => 해결 main-container를 반응형으로 한답시고 130vh 이딴식으로 줘서 문제였음, 100%로 주니 해결)
+ 3) 메인페이지(sign-in, up)의 헤더와 로그인, 회원가입 페이지의 header 글씨 위치가 바뀜
+ 4) 회원가입 양식에서 아이디나 비밀번호 입력 시 칸이 왔다 갔다 움직이는 현상
+
+
+
+2. Code
+ 1) useEffect의 반복 => 재사용성
+ 2) 
+
+
+
+3. Function명명 문제 
+ - 명사화 해야함
+
+
+4. css
+ - 버튼이나 input 같은 것들은 전부 id로 통일
+ - button btn 등 통일화 필요
+
+
+5. server
+ - controller에서 성공 시 굳이 result에 데이터를 넘길 필요가 없는 것들은
+   간단히 success라는 텍스트만 보내도 되는거 아님?
+
