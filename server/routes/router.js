@@ -15,4 +15,14 @@ module.exports = (server) => {
         "/sign_up",
         controller.insertionUserInfo
     );
+
+    server.post(
+        "/memo_insert",
+        controller.insertionMemo
+    );
+
+    server.get(
+        "/load_memo",
+        controller.loadMemo
+    );
 }

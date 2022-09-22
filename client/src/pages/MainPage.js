@@ -6,7 +6,7 @@ import styles from "../css/MainPage.module.css"
 const MainPage = () => {
     return (
         <div className={styles.flex_main_container}>
-            <div className={styles.flex_head_container}>
+            <div>
                 <Header />
             </div>
             <div className={styles.flex_content_container}>

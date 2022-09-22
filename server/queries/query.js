@@ -8,4 +8,10 @@ exports.checkIdDup = (req) => {
 
 exports.insertInfo = (req) => {
     return `INSERT INTO user_info VALUES('${req.id}', '${req.password}')`;
-}
+};
+
+exports.insertionMemo = (req) => {
+    return `INSERT INTO memo_info(memo_title, memo_content) VALUES ("${req.title}", "${req.content}");`;
+};
+
+exports.loadMemo = 'SELECT * FROM memo_info ORDER BY seq DESC';

@@ -7,11 +7,13 @@
     background-color: #DAF1DA;
     color: rgb(0, 0, 0);
     width: 100%;
-    height: 100%;
+    height: 10%;
     font-size: 60px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-user-select: none;          /* none 4가지는 드래그 방지 */
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .navLink {                  /* NavLink의 css 제거 */

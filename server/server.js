@@ -9,8 +9,12 @@ const path = require("path");
 const cors = require("cors");
 const fs = require("fs");
 
+// process.env를 관리
+const dotenv = require('dotenv');
+dotenv.config();
+
 // 추후 client || dev mode에 따른 접속 port 구분
-const port = 443 || 5000;
+const port = 5000 || 443;
 
 server.use(cors());
 server.use(express.json());

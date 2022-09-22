@@ -101,7 +101,7 @@ const JoinPage = () => {
         };
         axios({
           method: "post",
-          url: "https://localhost:443/id_duplicate_check",
+          url: "http://localhost:5000/id_duplicate_check",
           headers: { "Content-type": "application/x-www-form-urlencoded" },
           data: qs.stringify(input_id),
         })
@@ -145,7 +145,7 @@ const JoinPage = () => {
           } else {
             axios({
               method: "post",
-              url: "https://localhost:443/sign_up",
+              url: "http://localhost:5000/sign_up",
               headers: { "Content-type": "application/x-www-form-urlencoded" },
               data: qs.stringify(join_info),
             })
@@ -168,7 +168,7 @@ const JoinPage = () => {
 
     return (
       <div className={styles.flex_main_container}>
-        <div className={styles.flex_head_container}>
+        <div>
           <Header />
         </div>
         <div className={styles.flex_content_container}>

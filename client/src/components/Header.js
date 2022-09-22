@@ -6,7 +6,7 @@ const Header = () => {
 
     return (
         <div className="flex-container">
-            <div>
+            <div className="navLink-container">
                 <NavLink to="/" className="navLink" >
                     SIMPLE MEMO
                 </NavLink>
