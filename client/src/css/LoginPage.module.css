@@ -105,10 +105,10 @@
 }
 
 .login_button {
-    width: 200px;
     -webkit-appearance: none;           /* 버튼 css default값 제거 */
     -moz-appearance: none;
     appearance: none;
+    width: 200px;
     background-color: #f8f8d9;
     font-size: 40px;
     font-family: NanumSeongSirCe;

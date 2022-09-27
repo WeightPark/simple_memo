@@ -69,6 +69,47 @@ exports.insertionMemo = async (req, res) => {
   }
 };
 
+exports.detailMemo = async (req, res) => {
+  console.log(req.body);
+  try {
+    const detailMemo = await model.detailMemo(req.body);
+    // console.log(detailMemo)
+    if (detailMemo !== undefined && detailMemo.length === 1) {
+      res.send({ result: "fail" });
+    } else {
+      res.send({ result: detailMemo }); // 후에 고쳐
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.updateMemo = async (req, res) => {
+  try {
+    const updateMemo = await model.updateMemo(req.body);
+    if (updateMemo !== undefined && updateMemo.affectedRows === 1) {
+      res.send({ result: "success" });
+    } else {
+      res.send({ result: "fail" });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.deleteMemo = async (req, res) => {
+  try {
+    const deleteMemo = await model.deleteMemo(req.body);
+    if (deleteMemo !== undefined && deleteMemo.affectedRows === 1) {
+      res.send({ result: "success" });
+    } else {
+      res.send({ result: "fail" });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 exports.loadMemo = async (req, res) => {
   try {
     const loadMemo = await model.loadMemo();

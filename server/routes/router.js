@@ -21,6 +21,21 @@ module.exports = (server) => {
         controller.insertionMemo
     );
 
+    server.post(
+        "/detail_memo",
+        controller.detailMemo
+    );
+
+    server.post(
+        "/update_memo",
+        controller.updateMemo
+    );
+
+    server.post(
+        "/delete_memo",
+        controller.deleteMemo
+    );
+
     server.get(
         "/load_memo",
         controller.loadMemo

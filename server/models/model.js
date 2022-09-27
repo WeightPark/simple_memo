@@ -41,6 +41,36 @@ exports.insertionMemo = async (req, res) => {
   }
 };
 
+exports.detailMemo = async (req, res) => {
+  try {
+    const promisePool = connection.promise();
+    const [rows] = await promisePool.query(query.detailMemo(req));
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.updateMemo = async (req, res) => {
+  try {
+    const promisePool = connection.promise();
+    const [rows] = await promisePool.query(query.updateMemo(req));
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.deleteMemo = async (req, res) => {
+  try {
+    const promisePool = connection.promise();
+    const [rows] = await promisePool.query(query.deleteMemo(req));
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 exports.loadMemo = async () => {
   try {
     const promisePool = connection.promise();

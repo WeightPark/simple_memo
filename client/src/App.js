@@ -3,7 +3,7 @@ import './App.css';
 import MainPage from "./pages/MainPage"
 import LoginPage from "./pages/LoginPage"
 import JoinPage from "./pages/JoinPage"
-import LoggedPage from "./pages/LoggedPage";
+import AuthMainPage from "./pages/AuthMainPage";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/join" element={<JoinPage />} />
-          <Route path="/memo" element={<LoggedPage />} />
+          <Route path="/memo" element={<AuthMainPage />} />
         </Routes>
       </Router>
     </div>
