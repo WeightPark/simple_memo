@@ -1,16 +1,16 @@
-exports.checkUser = req => {
-    return `SELECT * FROM user_info WHERE user_id = '${req.id}' AND user_pw = '${req.password}'`;
+exports.login = req => {
+    return `SELECT user_pw FROM user_info WHERE user_id = '${req.id}'`;
 };
 
-exports.checkIdDup = req => {
+exports.dupIdCheck = req => {
     return `SELECT * FROM user_info WHERE user_id = '${req.id}'`;
 };
 
-exports.insertInfo = req => {
-    return `INSERT INTO user_info VALUES('${req.id}', '${req.password}')`;
+exports.signUp = (id, password) => {
+    return `INSERT INTO user_info VALUES('${id}', '${password}')`;
 };
 
-exports.insertionMemo = req => {
+exports.regMemo = req => {
     return `INSERT INTO memo_info(memo_title, memo_content) VALUES ("${req.title}", "${req.content}");`;
 };
 

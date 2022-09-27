@@ -1,65 +1,87 @@
 const jwt = require('jsonwebtoken');
-const secret_key = require('../env/secret_key');
 const model = require('../models/model');
+const secret_key = require('../env/secret_key');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;  // key stretching 횟수
 
-exports.checkUser = async (req, res) => {
-    try {
-      const checkUser = await model.userCheck(req.body);
-      if (checkUser !== undefined && checkUser.length === 1) {
-        token = jwt.sign(
-          {
-            type: "JWT",
-            id: req.body.id,
-          },
-          secret_key.secretKey,
-          {
-            expiresIn: "30m",
-            issuer: "admin",
-          }
-        )
-        res.send({
-          code: 200,
-          message: "토큰 발급 완료",
-          token: token,
-        })
-      } else {
-        res.send({ result: "fail" });
+exports.login = async (req, res) => {
+  try {
+    const password = await model.login(req.body)
+    // console.log(req.body.password)
+    // console.log(password[0].user_pw)
+    bcrypt.compare(req.body.password, password[0].user_pw, (err, isMatch) => {
+      if (err) {
+        return res.status(500).json({ err: "불일치" });
       }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-exports.checkIdDuplication = async (req, res) => {
-  try {
-    const checkIdDup = await model.checkIdDup(req.body);
-    if (checkIdDup !== undefined && checkIdDup.length === 1) {
-      res.send({ result: "fail" });
-    } else {
-      res.send({ result: checkIdDup });
-    }
+      if (isMatch) {
+          token = jwt.sign(
+            {
+              type: "JWT",
+              id: req.body.id,
+            },
+            secret_key.secretKey,
+            {
+              expiresIn: "30m",
+            }
+          );
+          res.send({
+            code: 200,
+            message: "토큰 발급 완료",
+            token: token
+          });
+      }
+    });
   } catch (err) {
     console.log(err);
   }
 };
 
-exports.insertionUserInfo = async (req, res) => {
+exports.dupIdCheck = async (req, res) => {
   try {
-    const insertionUserInfo = await model.insertionUserInfo(req.body);
-    if (insertionUserInfo !== undefined && insertionUserInfo.affectedRows === 1) {
+    const dupIdCheck = await model.dupIdCheck(req.body);
+    if (dupIdCheck !== undefined && dupIdCheck.length === 1) {
+      res.send({ result: "fail" });
+    } else {
       res.send({ result: "success" });
-    } else {
-      res.send({ result: "fail" });
     }
   } catch (err) {
     console.log(err);
   }
 };
 
-exports.insertionMemo = async (req, res) => {
+exports.signUp = (req, res) => {
+  let { id, password } = req.body;
   try {
-    const insertionMemo = await model.insertionMemo(req.body);
-    if (insertionMemo !== undefined && insertionMemo.affectedRows === 1) {
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+      if (err)
+        return res.status(500).json({
+          registerSuccess: false,
+          message: "비밀번호 해쉬화에 실패",
+        });
+      bcrypt.hash(password, salt, async (err, hash) => {
+        if (err)
+          return res.status(500).json({
+            registerSuccess: false,
+            message: "비밀번호 해쉬화에 실패",
+          });
+        password = hash;
+        const signUp = await model.signUp(id, password);
+        if (signUp !== undefined && signUp.affectedRows === 1) {
+          res.send({ result: "success" });
+        } else {
+          res.send({ result: "fail" });
+        }
+      });
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.regMemo = async (req, res) => {
+  try {
+    const regMemo = await model.regMemo(req.body);
+    if (regMemo !== undefined && regMemo.affectedRows === 1) {
       res.send({ result: "success" });
     } else {
       res.send({ result: "fail" });

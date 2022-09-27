@@ -2,23 +2,23 @@ module.exports = (server) => {
     const controller = require("../controllers/controller.js");
 
     server.post(
-        "/user_check",
-        controller.checkUser,
+        "/login",
+        controller.login,
     );
 
     server.post(
         "/id_duplicate_check",
-        controller.checkIdDuplication
+        controller.dupIdCheck
     );
 
     server.post(
         "/sign_up",
-        controller.insertionUserInfo
+        controller.signUp
     );
 
     server.post(
         "/memo_insert",
-        controller.insertionMemo
+        controller.regMemo
     );
 
     server.post(
