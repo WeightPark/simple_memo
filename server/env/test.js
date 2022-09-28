@@ -13,19 +13,23 @@ const saltRounds = 10;  // key stretching 횟수
 // }
 
 // console.log(test(1))
-let password = "abde123"
-let bcPw = bcrypt.hash(password, saltRounds)
+// let password = "abde123"
+// let bcPw = bcrypt.hash(password, saltRounds)
 
-const bb = async() => {
-    bcrypt.compare(password, bcPw, (error, isMatch) => {
-        if (error) {
-            return error
-        }
-        if (isMatch) {
-            return match
-        }
-    })
-}
+// const bb = async() => {
+//     bcrypt.compare(password, bcPw, (error, isMatch) => {
+//         if (error) {
+//             return error
+//         }
+//         if (isMatch) {
+//             return match
+//         }
+//     })
+// }
 
-// const valid = bcrypt.compare(password, bcPw);
-console.log(bcPw)
+// // const valid = bcrypt.compare(password, bcPw);
+// console.log(bcPw)
+
+const b = undefined
+
+console.log(b.length)

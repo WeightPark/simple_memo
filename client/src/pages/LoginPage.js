@@ -10,7 +10,9 @@ const LoginPage = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [boxChecked, setBoxChecked] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies(['token']);
+  const [cookies, setCookie] = useCookies(['token']);
+
+  // console.log(cookies)
 
   useEffect(() => {
     if (localStorage.getItem("saveCheckBox") === null) {
@@ -54,15 +56,12 @@ const LoginPage = () => {
       data: qs.stringify(userData),
     })
       .then((res) => {
-        console.log(res);
         if (res.data.result === "fail") {
           window.alert("아이디나 비밀번호를 확인하세요");
-          // window.location.replace("/login");
+          window.location.replace("/login");
         } else if (res.data.code === 200) {
-          setCookie(res.data.token);
-          // const accessToken = res.data.token;
-          // API 요청하는 콜마다 헤더에 accessToken을 담아 보내도록 설정
-          // axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+          console.log(res.data)
+          setCookie(['token'], res.data, { path: "/" });
           navigate("/memo");
         }
       })
@@ -71,8 +70,7 @@ const LoginPage = () => {
         alert("로그인 실패 : 아이디나 비밀번호를 확인하세요");
       });
   };
-
-  // console.log(cookies)
+  
   return (
     <div className={styles.flex_main_container}>
       <div>

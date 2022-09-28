@@ -7,8 +7,6 @@ const saltRounds = 10;  // key stretching 횟수
 exports.login = async (req, res) => {
   try {
     const password = await model.login(req.body)
-    // console.log(req.body.password)
-    // console.log(password[0].user_pw)
     bcrypt.compare(req.body.password, password[0].user_pw, (err, isMatch) => {
       if (err) {
         return res.status(500).json({ err: "불일치" });
@@ -16,23 +14,27 @@ exports.login = async (req, res) => {
       if (isMatch) {
           token = jwt.sign(
             {
-              type: "JWT",
-              id: req.body.id,
+              type : "JWT",
+              id : req.body.id,
             },
             secret_key.secretKey,
             {
-              expiresIn: "30m",
+              expiresIn: "1m",
             }
           );
           res.send({
-            code: 200,
-            message: "토큰 발급 완료",
-            token: token
+            code : 200,
+            message : "토큰 발급 완료",
+            token : token,
+            id : req.body.id 
           });
       }
     });
   } catch (err) {
-    console.log(err);
+    return res.status(500).json({
+      code : 500,
+      message : '서버 에러'
+    });
   }
 };
 
@@ -92,10 +94,8 @@ exports.regMemo = async (req, res) => {
 };
 
 exports.detailMemo = async (req, res) => {
-  console.log(req.body);
   try {
     const detailMemo = await model.detailMemo(req.body);
-    // console.log(detailMemo)
     if (detailMemo !== undefined && detailMemo.length === 1) {
       res.send({ result: "fail" });
     } else {
@@ -134,7 +134,7 @@ exports.deleteMemo = async (req, res) => {
 
 exports.loadMemo = async (req, res) => {
   try {
-    const loadMemo = await model.loadMemo();
+    const loadMemo = await model.loadMemo(req.query);
     if (loadMemo !== undefined && loadMemo.length > 0) {
       res.send({ result: loadMemo });
     } else {

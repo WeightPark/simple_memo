@@ -1,5 +1,6 @@
 module.exports = (server) => {
     const controller = require("../controllers/controller.js");
+    const verifyToken = require('./jwt_middlewares')
 
     server.post(
         "/login",
@@ -40,4 +41,12 @@ module.exports = (server) => {
         "/load_memo",
         controller.loadMemo
     );
-}
+
+    server.get(
+        "/verify_token", 
+        verifyToken.verifyToken,
+        (req, res) => {
+            res.send(req.decoded)
+        }
+    );
+};

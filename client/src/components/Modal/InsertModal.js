@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useCookies } from 'react-cookie'; 
 import axios from "axios";
 import qs from 'qs';
 import styles from "../../css/auth/InsertModal.module.css"
@@ -6,6 +7,7 @@ import styles from "../../css/auth/InsertModal.module.css"
 const InsertModal = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [cookies, setCookie] = useCookies(["token"]);
 
   const inputTitle = (e) => {
     setTitle(e.target.value);
@@ -20,6 +22,7 @@ const InsertModal = () => {
     const memoData = {
       title: title,
       content: content,
+      user_id : cookies.token.id
     };
     if (memoData.title === "" && memoData.content === "") {
       alert("제목, 내용 둘 다 없는 경우 등록되지 않습니다");

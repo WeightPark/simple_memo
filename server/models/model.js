@@ -71,12 +71,14 @@ exports.deleteMemo = async (req, res) => {
   }
 };
 
-exports.loadMemo = async () => {
+exports.loadMemo = async (req, res) => {
   try {
     const promisePool = connection.promise();
-    const [rows] = await promisePool.query(query.loadMemo);
+    const [rows] = await promisePool.query(query.loadMemo(req.user_id));
+    console.log(rows)
     return rows;
   } catch (error) {
+    console.log("Here")
     console.log(error);
   }
 };

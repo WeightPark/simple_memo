@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from 'react-cookie'; 
 import axios from "axios";
 import qs from 'qs';
 import Modal from "../components/Modal/Modal"
@@ -14,17 +16,46 @@ import deleteMemoImg from "../img/delete.png"
 
 const LoggedPage = (props) => {
   const [memoInfo, setMemoInfo] = useState([]);
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [detailOpen, setDetailOpen] = useState(false);  // 메모 상세보기 모달 창 on / off 여부 state 관리 
   const [updateOpen, setUpdateOpen] = useState(false);  // 메모 수정 모달 창 on / off 여부 state 관리
   const [insertOpen, setInsertOpen] = useState(false);  // 메모 삽입 모달 창 on / off 여부 state 관리
   const [detailInfo, setDetailInfo] = useState([]);     // 상세 보기 모달창에 넘겨줄 메모 상세 정보
+  
+  let navigate = useNavigate();
 
+  console.log(cookies.token.id)
   useEffect(() => {
     axios
-      .get("http://localhost:5000/load_memo")
-      .then((res) => setMemoInfo(res.data.result))
+      .get(
+        "http://localhost:5000/load_memo",
+        { params : { user_id : cookies.token.id }}
+      )
+      .then((res) => console.log(res.data.result))
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    const token = cookies.token.token;
+    axios
+      .get(
+        "http://localhost:5000/verify_token", 
+        { headers : { authorization : token }}
+      )
+      .then((res) => {
+        console.log(res.data)
+      })
+      .catch((err) => {
+        if (err.response.data.code === 419) {
+          alert("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
+        }
+        if (err.response.data.code === 401) {
+          alert("유효하지 않은 접근 입니다. 로그인을 먼저 해주세요.");
+        }
+        removeCookie("token");
+        navigate("/");
+      });
+  });
 
   const insertMemo = () => {
     setInsertOpen(!insertOpen);
@@ -41,7 +72,6 @@ const LoggedPage = (props) => {
   };
 
   const deleteMemo = item => {
-    console.log(item.seq)
     if(window.confirm("메모를 삭제하시겠습니까?")) {
       const postDeleteData = qs.stringify({
         seq : item.seq
