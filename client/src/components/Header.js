@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useCookies } from 'react-cookie';  
 import "../css/Header.css";
-import Auth from "../utils/Auth";
+// import Auth from "../utils/Auth";
 
 const Header = () => {
   const [cookies, removeCookie] = useCookies(["token"]);
@@ -15,10 +15,10 @@ const Header = () => {
   };
 
   return (
-    <div className="main-container">
+    <>
       <div className="head-container">
         <div className="navLink-container">
-          {cookies.token !== "undefined" ? (
+          {cookies.token !== "undefined" && cookies.token !== undefined ? (
             <Link to="/memo" className="navLink">
               SIMPLE MEMO
             </Link>
@@ -30,7 +30,7 @@ const Header = () => {
         </div>
       </div>
       <div className="logout-container">
-        {Auth() === true ? (
+        {cookies.token !== "undefined" && cookies.token !== undefined ? (
           <button id="logout_btn" onClick={LogOut}>
             로그아웃
           </button>
@@ -38,7 +38,7 @@ const Header = () => {
           <></>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,12 +1,8 @@
 /* 나눔스퀘어 글씨체 사용 */
 @import url(https://hangeul.pstatic.net/hangeul_static/css/NanumSaRangHaeADeur.css); 
 
-.main-container {
-    font-family: NanumSaRangHaeADeur;
-    background-color: #f8f8d9;
-}
-
 .head-container {
+    font-family: NanumSaRangHaeADeur;
     font-weight: bold;
     background-color: #DAF1DA;
     color: rgb(0, 0, 0);

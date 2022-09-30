@@ -2,7 +2,6 @@
 // console.log(module.exports === exports);
 // const bcrypt = require('bcrypt');
 // const saltRounds = 10;  // key stretching 횟수
-
 // const days = ["mon", "tues", "wednes", "thurs", "fri"];
 // const test = days.map(day => `${day}day`);
 
@@ -72,9 +71,7 @@ let test5 = () => {
 // console.log(test5());
 
 
-const test6 = {
-    
-};
+const test6 = Object;
 
 const test7 = () => {
     if (test6) {
@@ -83,5 +80,5 @@ const test7 = () => {
     return 2
 }
 
-console.log(test6)
+console.log(Object.keys(test6).length )
 console.log(test7())

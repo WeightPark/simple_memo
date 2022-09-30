@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import qs from 'qs';
-import styles from "../../css/auth/UpdateModal.module.css"
+import styles from "../../css/auth_css/UpdateModal.module.css"
 
 const UpdateModal = ({ detailInfo, closeUpdate }) => {
     const [title, setTitle] = useState(detailInfo.title);

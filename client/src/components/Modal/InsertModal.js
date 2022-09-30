@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useCookies } from 'react-cookie'; 
 import axios from "axios";
 import qs from 'qs';
-import styles from "../../css/auth/InsertModal.module.css"
+import styles from "../../css/auth_css/InsertModal.module.css"
 
 const InsertModal = () => {
   const [title, setTitle] = useState("");

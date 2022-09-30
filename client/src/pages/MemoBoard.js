@@ -8,7 +8,7 @@ import Modal from "../components/Modal/Modal"
 import DetailModal from "../components/Modal/DetailModal"
 import InsertModal from "../components/Modal/InsertModal"
 import UpdateModal from "../components/Modal/UpdateModal"
-import styles from "../css/auth/AuthMainPage.module.css"
+import styles from "../css/auth_css/MemoBoard.module.css"
 import plusMemo from "../img/pencil-icon.png"
 import detailMemoImg from "../img/detail.png"
 import updateMemoImg from "../img/update.png"
@@ -24,6 +24,9 @@ const LoggedPage = () => {
   
   let navigate = useNavigate();
 
+  console.log(cookies)
+
+  // user의 메모 데이터 로딩
   useEffect(() => {
     axios
       .get("http://localhost:5000/load_memo", {
@@ -33,28 +36,27 @@ const LoggedPage = () => {
       .catch((err) => console.log(err));
     }, []);
 
-  // useEffect(() => {
-  //   const token = cookies.token.token;
-  //   axios
-  //     .get("http://localhost:5000/verify_token", {
-  //       headers: { authorization: token },
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //     })
-  //     .catch((err) => {
-  //       if (err.response.data.code === 419) {
-  //         alert("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
-  //       }
-  //       if (err.response.data.code === 401) {
-  //         alert("유효하지 않은 접근 입니다. 로그인을 먼저 해주세요.");
-  //       }
-  //       removeCookie("token")
-  //       navigate("/login")
-  //     });
-  // });
-
-  console.log(cookies.token)
+  // access token 유효성 체크
+  useEffect(() => {
+    const token = cookies.token.token;
+    axios
+      .get("http://localhost:5000/verify_token", {
+        headers: { authorization: token },
+      })
+      .then((res) => {
+        console.log("Valid Token");
+      })
+      .catch((err) => {
+        if (err.response.data.code === 419) {
+          alert("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
+        }
+        if (err.response.data.code === 401) {
+          alert("유효하지 않은 접근 입니다. 로그인을 먼저 해주세요.");
+        }
+        removeCookie("token")
+        navigate("/login")
+      });
+  });
 
   const insertMemo = () => {
     setInsertOpen(!insertOpen);

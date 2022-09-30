@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../css/auth/DetailModal.module.css"
+import styles from "../../css/auth_css/DetailModal.module.css"
 
 const DetailModal = ({ detailInfo, closeDetail }) => {
   // console.log(detailInfo)
