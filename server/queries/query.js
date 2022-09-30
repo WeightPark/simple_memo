@@ -27,5 +27,5 @@ exports.deleteMemo = (req) => {
 };
 
 exports.loadMemo = (req) => {
-  `SELECT * FROM memo_info WHERE user_id = '${req}' ORDER BY seq DESC`;
+  return `SELECT * FROM memo_info WHERE user_id = '${req}' ORDER BY seq DESC`;
 };

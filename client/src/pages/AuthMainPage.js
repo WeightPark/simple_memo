@@ -3,18 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie'; 
 import axios from "axios";
 import qs from 'qs';
+import Header from "../components/Header"
 import Modal from "../components/Modal/Modal"
 import DetailModal from "../components/Modal/DetailModal"
 import InsertModal from "../components/Modal/InsertModal"
 import UpdateModal from "../components/Modal/UpdateModal"
-import Header from "../components/Header"
 import styles from "../css/auth/AuthMainPage.module.css"
 import plusMemo from "../img/pencil-icon.png"
 import detailMemoImg from "../img/detail.png"
 import updateMemoImg from "../img/update.png"
 import deleteMemoImg from "../img/delete.png"
 
-const LoggedPage = (props) => {
+const LoggedPage = () => {
   const [memoInfo, setMemoInfo] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [detailOpen, setDetailOpen] = useState(false);  // 메모 상세보기 모달 창 on / off 여부 state 관리 
@@ -24,38 +24,37 @@ const LoggedPage = (props) => {
   
   let navigate = useNavigate();
 
-  console.log(cookies.token.id)
   useEffect(() => {
     axios
-      .get(
-        "http://localhost:5000/load_memo",
-        { params : { user_id : cookies.token.id }}
-      )
-      .then((res) => console.log(res.data.result))
-      .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {
-    const token = cookies.token.token;
-    axios
-      .get(
-        "http://localhost:5000/verify_token", 
-        { headers : { authorization : token }}
-      )
-      .then((res) => {
-        console.log(res.data)
+      .get("http://localhost:5000/load_memo", {
+        params: { user_id: cookies.token.id },
       })
-      .catch((err) => {
-        if (err.response.data.code === 419) {
-          alert("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
-        }
-        if (err.response.data.code === 401) {
-          alert("유효하지 않은 접근 입니다. 로그인을 먼저 해주세요.");
-        }
-        removeCookie("token");
-        navigate("/");
-      });
-  });
+      .then((res) => setMemoInfo(res.data.result))
+      .catch((err) => console.log(err));
+    }, []);
+
+  // useEffect(() => {
+  //   const token = cookies.token.token;
+  //   axios
+  //     .get("http://localhost:5000/verify_token", {
+  //       headers: { authorization: token },
+  //     })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     })
+  //     .catch((err) => {
+  //       if (err.response.data.code === 419) {
+  //         alert("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
+  //       }
+  //       if (err.response.data.code === 401) {
+  //         alert("유효하지 않은 접근 입니다. 로그인을 먼저 해주세요.");
+  //       }
+  //       removeCookie("token")
+  //       navigate("/login")
+  //     });
+  // });
+
+  console.log(cookies.token)
 
   const insertMemo = () => {
     setInsertOpen(!insertOpen);

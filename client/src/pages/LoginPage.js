@@ -12,7 +12,7 @@ const LoginPage = () => {
   const [boxChecked, setBoxChecked] = useState(false);
   const [cookies, setCookie] = useCookies(['token']);
 
-  // console.log(cookies)
+  let navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem("saveCheckBox") === null) {
@@ -33,8 +33,6 @@ const LoginPage = () => {
   const checkBoxChange = () => {
     setBoxChecked(!boxChecked);
   };
-
-  let navigate = useNavigate();
 
   const HandleSubmit = (e) => {
     e.preventDefault();
@@ -60,8 +58,8 @@ const LoginPage = () => {
           window.alert("아이디나 비밀번호를 확인하세요");
           window.location.replace("/login");
         } else if (res.data.code === 200) {
-          console.log(res.data)
-          setCookie(['token'], res.data, { path: "/" });
+          console.log(res.data);
+          setCookie(["token"], res.data, { path: "/" });
           navigate("/memo");
         }
       })
