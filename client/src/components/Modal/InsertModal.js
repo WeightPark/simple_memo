@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useCookies } from 'react-cookie'; 
 import axios from "axios";
 import qs from 'qs';
-import styles from "../../css/InsertModal.module.css"
+import styles from "../../css/auth_css/InsertModal.module.css"
 
 const InsertModal = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [cookies, setCookie] = useCookies(["token"]);
 
   const inputTitle = (e) => {
     setTitle(e.target.value);
@@ -20,6 +22,7 @@ const InsertModal = () => {
     const memoData = {
       title: title,
       content: content,
+      user_id : cookies.token.id
     };
     if (memoData.title === "" && memoData.content === "") {
       alert("제목, 내용 둘 다 없는 경우 등록되지 않습니다");
@@ -50,7 +53,8 @@ const InsertModal = () => {
           <div className={styles.memo_title_container}>
             <input
               type="text"
-              autoComplete="off"
+              autoComplete="off"  // 자동 완성 기능 off
+              spellCheck="false"  // 맞춤법 검사 OFF
               maxLength={32}
               placeholder="제목"
               onChange={inputTitle}
@@ -62,6 +66,7 @@ const InsertModal = () => {
               rows={15}
               cols={28}
               maxLength={600}
+              spellCheck="false"
               placeholder="내용(600자)"
               onChange={inputContent}
               id={styles.insert_memo_content}

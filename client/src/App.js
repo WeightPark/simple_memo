@@ -1,22 +1,28 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import './App.css';
+import { useCookies } from 'react-cookie';
+import PublicRoute from "./Router/PublicRoute";
+import PrivateRoute from "./Router/PrivateRoute";  
 import MainPage from "./pages/MainPage"
 import LoginPage from "./pages/LoginPage"
 import JoinPage from "./pages/JoinPage"
-import LoggedPage from "./pages/LoggedPage";
+import MemoBoard from "./pages/MemoBoard";
+import './App.css';
 
-function App() {
+const App = () => {
+  const [cookies, setCookie] = useCookies(["token"]);
+  const auth = cookies.token;
+
   return (
-    <div>
+    <>
       <Router>
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/join" element={<JoinPage />} />
-          <Route path="/memo" element={<LoggedPage />} />
+          <Route path="/" element={<PublicRoute authenticated={auth} component={<MainPage />} />} />
+          <Route path="/login" element={<PublicRoute authenticated={auth} component={<LoginPage />} />}/>
+          <Route path="/join" element={<PublicRoute authenticated={auth} component={<JoinPage />} />} />
+          <Route path="/memo" element={<PrivateRoute authenticated={auth} component={<MemoBoard />} />} />
         </Routes>
       </Router>
-    </div>
+    </>
   );
 }
 

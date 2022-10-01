@@ -13,11 +13,14 @@ const fs = require("fs");
 const dotenv = require('dotenv');
 dotenv.config();
 
+const cookieParser = require('cookie-parser');
+
 // 추후 client || dev mode에 따른 접속 port 구분
 const port = 5000 || 443;
 
 server.use(cors());
 server.use(express.json());
+server.use(cookieParser());
 server.use(express.urlencoded({ extended: false }));
 server.use(express.static(path.join(__dirname, '../client/build')));
 server.use(express.static(path.join(__dirname, '../../client/build')));

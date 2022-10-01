@@ -151,6 +151,7 @@ const JoinPage = () => {
             })
               .then((res) => {
                 if (res.data.result === "fail") {
+                  console.log(res)
                   window.alert("입력된 정보를 다시 확인하세요");
                 } else {
                   window.alert("회원 가입 완료");

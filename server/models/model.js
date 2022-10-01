@@ -1,50 +1,80 @@
 const connection = require('../common/db');
 const query = require('../queries/query');
 
-exports.userCheck = async (req, res) => {
+exports.login = async (req) => {
     try {
       const promisePool = connection.promise();
-      const [rows] = await promisePool.query(query.checkUser(req));
+      const [rows] = await promisePool.query(query.login(req));
       return rows;
     } catch (error) {
       console.log(error);
     }
   };
 
-exports.checkIdDup = async (req, res) => {
+exports.dupIdCheck = async (req, res) => {
   try {
     const promisePool = connection.promise();
-    const [rows] = await promisePool.query(query.checkIdDup(req));
+    const [rows] = await promisePool.query(query.dupIdCheck(req));
     return rows;
   } catch (error) {
     console.log(error);
   }
 };
 
-exports.insertInfo = async (req, res) => {
+exports.signUp = async (id, password) => {
   try {
     const promisePool = connection.promise();
-    const [rows] = await promisePool.query(query.insertInfo(req));
+    const [rows] = await promisePool.query(query.signUp(id, password));
     return rows;
   } catch (error) {
     console.log(error);
   }
 };
 
-exports.insertionMemo = async (req, res) => {
+exports.regMemo = async (req, res) => {
   try {
     const promisePool = connection.promise();
-    const [rows] = await promisePool.query(query.insertionMemo(req));
+    const [rows] = await promisePool.query(query.regMemo(req));
     return rows;
   } catch (error) {
     console.log(error);
   }
 };
 
-exports.loadMemo = async () => {
+exports.detailMemo = async (req, res) => {
   try {
     const promisePool = connection.promise();
-    const [rows] = await promisePool.query(query.loadMemo);
+    const [rows] = await promisePool.query(query.detailMemo(req));
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.updateMemo = async (req, res) => {
+  try {
+    const promisePool = connection.promise();
+    const [rows] = await promisePool.query(query.updateMemo(req));
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.deleteMemo = async (req, res) => {
+  try {
+    const promisePool = connection.promise();
+    const [rows] = await promisePool.query(query.deleteMemo(req));
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.loadMemo = async (req, res) => {
+  try {
+    const promisePool = connection.promise();
+    const [rows] = await promisePool.query(query.loadMemo(req.user_id));
     return rows;
   } catch (error) {
     console.log(error);

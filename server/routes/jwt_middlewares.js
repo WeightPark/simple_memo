@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
+const secret_key = require('../env/secret_key');
 
-exports.verifyToken = (req, res) => {
+exports.verifyToken = (req, res, next) => {
     try {
-        req.decoded = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
+        req.decoded = jwt.verify(req.headers.authorization, secret_key.secretKey);
         return next();
     } catch (error) {
         if (error.name === 'TokenExpiredError') {   // 유효 기간 초과

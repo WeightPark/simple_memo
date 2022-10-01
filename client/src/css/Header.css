@@ -1,7 +1,7 @@
 /* 나눔스퀘어 글씨체 사용 */
 @import url(https://hangeul.pstatic.net/hangeul_static/css/NanumSaRangHaeADeur.css); 
 
-.flex-container {
+.head-container {
     font-family: NanumSaRangHaeADeur;
     font-weight: bold;
     background-color: #DAF1DA;
@@ -19,4 +19,23 @@
 .navLink {                  /* NavLink의 css 제거 */
     color: inherit;
     text-decoration: none;
+}
+
+.logout-container {
+    text-align: center;
+}
+
+#logout_btn {
+    -webkit-appearance: none;           /* 버튼 css default값 제거 */
+    -moz-appearance: none;
+    appearance: none;
+    width: 80px;
+    height: 40px;
+    display: inline-block;
+    background-color: #f8f8d9;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: NanumSeongSirCe;
+    cursor: pointer;                    /* 버튼에 마우스 올릴 시 손가락 모양 적용 */
+    border: none;
 }

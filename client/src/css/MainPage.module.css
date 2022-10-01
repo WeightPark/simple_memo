@@ -2,7 +2,7 @@
 @import url(https://hangeul.pstatic.net/hangeul_static/css/NanumSaRangHaeADeur.css); 
 
 .flex_main_container {
-    height: 100%;                       /* vh - 반응형 높이 설정 */
+    height: 100%;                       
     -webkit-user-select: none;          /* none 4가지는 드래그 방지 */
     -moz-user-select: none;
     -ms-user-select: none;

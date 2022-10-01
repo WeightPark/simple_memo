@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from 'react-cookie'; 
 import axios from "axios";
 import qs from 'qs';
 import Header from "../components/Header.js";
@@ -9,6 +10,9 @@ const LoginPage = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [boxChecked, setBoxChecked] = useState(false);
+  const [cookies, setCookie] = useCookies(['token']);
+
+  let navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem("saveCheckBox") === null) {
@@ -30,8 +34,6 @@ const LoginPage = () => {
     setBoxChecked(!boxChecked);
   };
 
-  let navigate = useNavigate();
-
   const HandleSubmit = (e) => {
     e.preventDefault();
     if (boxChecked === true) {
@@ -47,19 +49,17 @@ const LoginPage = () => {
     };
     axios({
       method: "post",
-      url: "http://localhost:5000/user_check",
+      url: "http://localhost:5000/login",
       headers: { "Content-type": "application/x-www-form-urlencoded" },
       data: qs.stringify(userData),
     })
       .then((res) => {
-        console.log(res);
         if (res.data.result === "fail") {
           window.alert("아이디나 비밀번호를 확인하세요");
           window.location.replace("/login");
         } else if (res.data.code === 200) {
-          // const accessToken = res.data.token;
-          // API 요청하는 콜마다 헤더에 accessToken을 담아 보내도록 설정
-          // axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+          console.log(res.data);
+          setCookie(["token"], res.data, { path: "/" });
           navigate("/memo");
         }
       })
@@ -68,7 +68,7 @@ const LoginPage = () => {
         alert("로그인 실패 : 아이디나 비밀번호를 확인하세요");
       });
   };
-
+  
   return (
     <div className={styles.flex_main_container}>
       <div>
