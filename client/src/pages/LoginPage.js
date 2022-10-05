@@ -2,43 +2,42 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie'; 
 import axios from "axios";
-import qs from 'qs';
 import Header from "../components/Header.js";
 import styles from "../css/LoginPage.module.css"
 
 const LoginPage = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [boxChecked, setBoxChecked] = useState(false);
+  const [rememberId, setRememberId] = useState(false);
   const [cookies, setCookie] = useCookies(['token']);
 
   let navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem("saveCheckBox") === null) {
-      setBoxChecked(false);
+      setRememberId(false);
     } else {
-      setBoxChecked(true);
+      setRememberId(true);
     }
   }, []);
 
-  const handleInputId = (e) => {
+  const inputId = (e) => {
     setId(e.target.value);
   };
 
-  const handleInputPw = (e) => {
+  const inputPw = (e) => {
     setPassword(e.target.value);
   };
 
-  const checkBoxChange = () => {
-    setBoxChecked(!boxChecked);
+  const stateChange = () => {
+    setRememberId(!rememberId);
   };
 
-  const HandleSubmit = (e) => {
+  const logIn = (e) => {
     e.preventDefault();
-    if (boxChecked === true) {
+    if (rememberId === true) {
       localStorage.setItem("saveId", id);
-      localStorage.setItem("saveCheckBox", boxChecked);
+      localStorage.setItem("saveCheckBox", rememberId);
     } else {
       localStorage.removeItem("saveId");
       localStorage.removeItem("saveCheckBox");
@@ -47,18 +46,17 @@ const LoginPage = () => {
       id: id,
       password: password,
     };
-    axios({
-      method: "post",
-      url: "http://localhost:5000/login",
-      headers: { "Content-type": "application/x-www-form-urlencoded" },
-      data: qs.stringify(userData),
-    })
+    // 아래 axios post 방법과 Join page의 axios post 방식을 다르게 씀(타 프로젝트 작성 시 참고)
+    axios
+      .post("http://localhost:5000/login", {
+        headers: { "Content-type": "application/x-www-form-urlencoded" },
+        data: userData,
+      })
       .then((res) => {
         if (res.data.result === "fail") {
           window.alert("아이디나 비밀번호를 확인하세요");
           window.location.replace("/login");
         } else if (res.data.code === 200) {
-          console.log(res.data);
           setCookie(["token"], res.data, { path: "/" });
           navigate("/memo");
         }
@@ -76,12 +74,12 @@ const LoginPage = () => {
       </div>
       <div className={styles.flex_content_container}>
         <div>
-          <form onSubmit={HandleSubmit}>
+          <form onSubmit={logIn}>
             <div className={styles.flex_login_container}>ID</div>
             <div>
               <input
                 type="text"
-                onChange={handleInputId}
+                onChange={inputId}
                 placeholder={
                   localStorage.getItem("saveId") === null
                     ? "아이디"
@@ -95,7 +93,7 @@ const LoginPage = () => {
             <div>
               <input
                 type="password"
-                onChange={handleInputPw}
+                onChange={inputPw}
                 placeholder="비밀번호"
                 className={styles.input_underline}
               />
@@ -105,8 +103,8 @@ const LoginPage = () => {
               <label className={styles.id_save_switch_button}>
                 <input
                   type="checkbox"
-                  onChange={checkBoxChange}
-                  checked={boxChecked}
+                  onChange={stateChange}
+                  checked={rememberId}
                 />
                 <span className={styles.onoff_switch}></span>
               </label>

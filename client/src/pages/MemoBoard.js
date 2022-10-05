@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie'; 
 import axios from "axios";
+import { AxiosGet } from "../Router/AxiosMiddleware"
 import qs from 'qs';
 import Header from "../components/Header"
 import Modal from "../components/Modal/Modal"
@@ -24,21 +25,20 @@ const LoggedPage = () => {
   
   let navigate = useNavigate();
 
-  console.log(cookies)
-
-  // user의 메모 데이터 로딩
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/load_memo", {
-        params: { user_id: cookies.token.id },
-      })
-      .then((res) => setMemoInfo(res.data.result))
-      .catch((err) => console.log(err));
-    }, []);
-
-  // access token 유효성 체크
+  // 페이지 렌더링 시 user의 메모 데이터 로딩, access token 유효성 체크
   useEffect(() => {
     const token = cookies.token.token;
+    AxiosGet({
+      url: "/load_memo",
+      type: { params: { user_id: cookies.token.id } },
+      data: setMemoInfo,
+    });
+
+    // AxiosGet({
+    //   url: "/verify_token",
+    //   type: { headers: { authorization: token } },
+    //   data: "Valid Token"
+    // });
     axios
       .get("http://localhost:5000/verify_token", {
         headers: { authorization: token },
@@ -56,7 +56,7 @@ const LoggedPage = () => {
         removeCookie("token")
         navigate("/login")
       });
-  });
+    }, []);
 
   const insertMemo = () => {
     setInsertOpen(!insertOpen);
@@ -77,15 +77,14 @@ const LoggedPage = () => {
       const postDeleteData = qs.stringify({
         seq : item.seq
       })
-      axios({
-        method: "post",
-        url: "http://localhost:5000/delete_memo",
-        headers: { "Content-type": "application/x-www-form-urlencoded" },
-        data: postDeleteData,
-      })
+      axios
+        .post("http://localhost:5000/delete_memo", {
+          headers: { "Content-type": "application/x-www-form-urlencoded" },
+          data: postDeleteData,
+        })
         .then((res) => {
           if (res === "fail") {
-            alert("메모 삭제 실패")
+            alert("메모 삭제 실패");
           } else {
             window.location.reload();
           }
@@ -115,7 +114,7 @@ const LoggedPage = () => {
                 <div className={styles.memo_icon_container}>
                   <img
                     src={detailMemoImg}
-                    alt="detail"
+                    alt="detailMemo"
                     onClick={() => detailMemo(item)}
                   />
                   {detailOpen && (
@@ -129,7 +128,7 @@ const LoggedPage = () => {
                   <span>메모 크게 보기</span>
                   <img
                     src={updateMemoImg}
-                    alt="update"
+                    alt="updateMemo"
                     onClick={() => updateMemo(item)}
                   />
                   {updateOpen && (
@@ -143,7 +142,7 @@ const LoggedPage = () => {
                   <span>메모 수정</span>
                   <img
                     src={deleteMemoImg}
-                    alt="delete"
+                    alt="deleteMemo"
                     onClick={() => deleteMemo(item)}
                   />
                   <span>메모 삭제</span>

@@ -14,10 +14,6 @@ exports.regMemo = (req) => {
   return `INSERT INTO memo_info(memo_title, memo_content, user_id) VALUES ("${req.title}", "${req.content}", "${req.user_id}");`;
 };
 
-exports.detailMemo = (req) => {
-  return `SELECT * FROM memo_info WHERE seq='${req.seq}'`;
-};
-
 exports.updateMemo = (req) => {
   return `UPDATE memo_info SET memo_title = '${req.title}', memo_content = '${req.content}' WHERE seq = '${req.seq}'`;
 };

@@ -17,10 +17,10 @@ const JoinPage = () => {
     const [rePwMessage, setRePwMessage] = useState("");
 
     // 유효성 확인(회원가입 버튼 클릭 시 데이터 전송 여부를 결정짓는 요소)
-    const [clickIdDup, setClickIdDup] = useState(false);            // 아이디 중복 검사 버튼 클릭 유무 확인
-    const [idOverlapCheck, setIdOverlapCheck] = useState(false);    // 아이디 중복 유효성 확인
-    const [idDupCheck, setIdDupCheck] = useState(false);            // 아이디 유효성 확인
-    const [pwDupCheck, setPwDupCheck] = useState(false);            // 비밀번호 유효성 확인
+    const [idDupClick, setIdDupClick] = useState(false);            // 아이디 중복 검사 버튼 클릭 유무 확인
+    const [idDupCheck, setIdDupCheck] = useState(false);            // 아이디 중복 확인
+    const [idRegForm, setIdRegForm] = useState(false);              // 아이디 입력 양식 유효성 확인
+    const [pwRegForm, setPwRegForm] = useState(false);              // 비밀번호 입력 양식 유효성 확인
     const [rePwCheck, setRePwCheck] = useState(false);              // 비밀번호 확인 일치 여부
     
     // 아이디, 비밀번호 입력 양식 유효성 검사
@@ -28,19 +28,19 @@ const JoinPage = () => {
     const regExpPw = /^.*(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/
 
     // 아이디 입력 시 함수
-    const handleInputId = (e) => {
+    const inputId = (e) => {
       if (regExpId.test(e.target.value) === true) {
         setId(e.target.value);
-        setIdDupCheck(true);
+        setIdRegForm(true);
         setIdMessage("유효한 아이디 형식입니다");
       } else {
-        setIdDupCheck(false);
+        setIdRegForm(false);
         setIdMessage("유효하지 않은 아이디 형식입니다");
       }
     };
     
     // 비밀번호 입력 시 함수
-    const handleInputPw = (e) => {
+    const inputPw = e => {
       if (regExpPw.test(e.target.value) === true) {
         if (e.target.value === rePassword) {
           setRePwCheck(true);
@@ -50,7 +50,7 @@ const JoinPage = () => {
           setRePwMessage("비밀번호가 일치하지 않습니다");
         }
         setPassword(e.target.value);
-        setPwDupCheck(true);
+        setPwRegForm(true);
         setPwMessage("유효한 비밀번호 형식입니다");
       } else if (regExpPw.test(e.target.value) === false) {
         if (rePassword !== "") {
@@ -59,14 +59,14 @@ const JoinPage = () => {
           setRePwMessage("");
         }
         setPassword(e.target.value);
-        setPwDupCheck(false);
+        setPwRegForm(false);
         setPwMessage("유효하지 않은 비밀번호 형식입니다");
       }
     };
 
     // 비밀번호 재확인 입력 시 함수
-    const handleInputRePw = (e) => {
-      if (pwDupCheck === true) {                    // 비밀번호 유효성 체크 통과 시
+    const inputRePw = e => {
+      if (pwRegForm === true) {                    // 비밀번호 유효성 체크 통과 시
         if (e.target.value === password) {          // 입력된 비밀번호 재확인 값과 패스워드 값 일치 시
           setRePwCheck(true);
           setRePassword(e.target.value);
@@ -78,7 +78,7 @@ const JoinPage = () => {
           setRePwCheck(false);
           setRePwMessage("");
         }
-      } else if (pwDupCheck === false) {            // 비밀번호 유효성 체크 미통과 시
+      } else if (pwRegForm === false) {            // 비밀번호 유효성 체크 미통과 시
         if (e.target.value !== "") {
           setRePassword(e.target.value);
           setRePwMessage("유효한 비밀번호를 먼저 입력해 주세요");
@@ -92,26 +92,27 @@ const JoinPage = () => {
     let navigate = useNavigate();
 
     // 아이디 중복 검사 버튼 클릭 시 함수
-    const id_inspection = (e) => {
+    const idDupInspect = e => {
       e.preventDefault();
-      if (id !== "" && idDupCheck === true) {
-        setClickIdDup(true);
+      if (id !== "" && idRegForm === true) {
+        setIdDupClick(true);
         const input_id = {
           id: id,
         };
-        axios({
-          method: "post",
-          url: "http://localhost:5000/id_duplicate_check",
-          headers: { "Content-type": "application/x-www-form-urlencoded" },
-          data: qs.stringify(input_id),
-        })
+        axios
+          .post("http://localhost:5000/id_duplicate_check", {
+            headers: { 
+              "Content-type": "application/x-www-form-urlencoded" 
+            },
+            data: qs.stringify(input_id),
+          })
           .then((res) => {
             if (res.data.result === "fail") {
               window.alert("이미 존재하는 아이디입니다");
-              setIdOverlapCheck(false);
+              setIdDupCheck(false);
             } else {
               window.alert("사용하실 수 있는 아이디입니다!");
-              setIdOverlapCheck(true);
+              setIdDupCheck(true);
             }
           })
           .catch(function (err) {
@@ -130,28 +131,29 @@ const JoinPage = () => {
         id: id,
         password: password,
       };
-      if (clickIdDup === false) {
+      if (idDupClick === false) {
         alert("아이디 중복 검사를 먼저 실행하세요!");
       } else {
-        if (idOverlapCheck === false) {
+        if (idDupCheck === false) {
           alert("이미 같은 아이디로 가입된 회원이 있습니다");
         } else {
           if (
-            idDupCheck === false ||
-            pwDupCheck === false ||
+            idRegForm === false ||
+            pwRegForm === false ||
             rePwCheck === false
           ) {
             alert("입력 정보를 다시 확인해주세요");
           } else {
-            axios({
-              method: "post",
-              url: "http://localhost:5000/sign_up",
-              headers: { "Content-type": "application/x-www-form-urlencoded" },
-              data: qs.stringify(join_info),
-            })
+            axios
+              .post("http://localhost:5000/sign_up", {
+                headers: {
+                  "Content-type": "application/x-www-form-urlencoded",
+                },
+                data: qs.stringify(join_info),
+              })
               .then((res) => {
                 if (res.data.result === "fail") {
-                  console.log(res)
+                  console.log(res);
                   window.alert("입력된 정보를 다시 확인하세요");
                 } else {
                   window.alert("회원 가입 완료");
@@ -181,7 +183,7 @@ const JoinPage = () => {
                   <input
                     type="text"
                     className={styles.input_underline}
-                    onChange={handleInputId}
+                    onChange={inputId}
                     placeholder="영소·대문자, 숫자 조합 6~12자"
                   />
                 </div>
@@ -191,7 +193,7 @@ const JoinPage = () => {
                 <div className={styles.flex_id_duplicate_inspector_button}>
                   <button
                     className={styles.id_duplicate_inspector_button}
-                    onClick={id_inspection}
+                    onClick={idDupInspect}
                   >
                     아이디 중복 검사
                   </button>
@@ -202,7 +204,7 @@ const JoinPage = () => {
                 <input
                   type="password"
                   className={styles.input_underline}
-                  onChange={handleInputPw}
+                  onChange={inputPw}
                   placeholder="영소(대)문자, 숫자, 특수문자 조합 8~16자"
                 />
                 <div className={styles.duplicate_status}>
@@ -214,7 +216,7 @@ const JoinPage = () => {
                 <input
                   type="password"
                   className={styles.input_underline}
-                  onChange={handleInputRePw}
+                  onChange={inputRePw}
                 />
                 <div className={styles.duplicate_status}>
                   <span>{rePwMessage}</span>

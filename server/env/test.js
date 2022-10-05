@@ -71,14 +71,26 @@ let test5 = () => {
 // console.log(test5());
 
 
-const test6 = Object;
+// const test6 = Object;
 
-const test7 = () => {
-    if (test6) {
-        return 1
+// const test7 = () => {
+//     if (test6) {
+//         return 1
+//     }
+//     return 2
+// }
+
+// console.log(Object.keys(test6).length )
+// console.log(test7())
+
+const a = 1;
+
+const test17 = () => {
+    if(a === 3 || 4) {
+        return true;
+    } else {
+        return false;
     }
-    return 2
-}
+};
 
-console.log(Object.keys(test6).length )
-console.log(test7())
+console.log(test17(a))

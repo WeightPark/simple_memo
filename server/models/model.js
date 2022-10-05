@@ -41,16 +41,6 @@ exports.regMemo = async (req, res) => {
   }
 };
 
-exports.detailMemo = async (req, res) => {
-  try {
-    const promisePool = connection.promise();
-    const [rows] = await promisePool.query(query.detailMemo(req));
-    return rows;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 exports.updateMemo = async (req, res) => {
   try {
     const promisePool = connection.promise();

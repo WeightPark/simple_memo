@@ -23,11 +23,6 @@ module.exports = (server) => {
     );
 
     server.post(
-        "/detail_memo",
-        controller.detailMemo
-    );
-
-    server.post(
         "/update_memo",
         controller.updateMemo
     );

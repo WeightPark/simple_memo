@@ -9,15 +9,15 @@ const InsertModal = () => {
   const [content, setContent] = useState("");
   const [cookies, setCookie] = useCookies(["token"]);
 
-  const inputTitle = (e) => {
+  const inputTitle = e => {
     setTitle(e.target.value);
   };
 
-  const inputContent = (e) => {
+  const inputContent = e => {
     setContent(e.target.value);
   };
 
-  const memoInsert = (e) => {
+  const memoInsert = e => {
     e.preventDefault();
     const memoData = {
       title: title,

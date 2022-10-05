@@ -5,35 +5,36 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;  // key stretching 횟수
 
 exports.login = async (req, res) => {
+  console.log(req.body)
   try {
-    const password = await model.login(req.body)
-    bcrypt.compare(req.body.password, password[0].user_pw, (err, isMatch) => {
+    const password = await model.login(req.body.data);
+    bcrypt.compare(req.body.data.password, password[0].user_pw, (err, isMatch) => {
       if (err) {
-        return res.status(500).json({ err: "불일치" });
+        return res.status(401).json({ err: "Password not matched" });
       }
       if (isMatch) {
-          token = jwt.sign(
-            {
-              type : "JWT",
-              id : req.body.id,
-            },
-            secret_key.secretKey,
-            {
-              expiresIn: "10m"
-            }
-          );
-          res.send({
-            code : 200,
-            message : "토큰 발급 완료",
-            token : token,
-            id : req.body.id 
-          });
+        token = jwt.sign(
+          {
+            type: "JWT",
+            id: req.body.data.id,
+          },
+          secret_key.secretKey,
+          {
+            expiresIn: "1h",
+          }
+        );
+        res.status(200).json({
+          code: 200,
+          message: "토큰 발급 완료",
+          token: token,
+          id: req.body.data.id,
+        });
       }
     });
   } catch (err) {
     return res.status(500).json({
-      code : 500,
-      message : '서버 에러'
+      code: 500,
+      message: "Login Error",
     });
   }
 };
@@ -42,12 +43,15 @@ exports.dupIdCheck = async (req, res) => {
   try {
     const dupIdCheck = await model.dupIdCheck(req.body);
     if (dupIdCheck !== undefined && dupIdCheck.length === 1) {
-      res.send({ result: "fail" });
+      res.status(401).json({ code: 401, message: "Exist ID" });
     } else {
-      res.send({ result: "success" });
+      res.status(200).json({ code: 200, message: "Valid ID" });
     }
   } catch (err) {
-    console.log(err);
+    return res.status(500).json({
+      code: 500,
+      message: "Connection(Check for duplicate ID) failed",
+    });
   }
 };
 
@@ -58,25 +62,28 @@ exports.signUp = (req, res) => {
       if (err)
         return res.status(500).json({
           registerSuccess: false,
-          message: "비밀번호 해쉬화에 실패",
+          message: "Salting for password failed",
         });
       bcrypt.hash(password, salt, async (err, hash) => {
         if (err)
           return res.status(500).json({
             registerSuccess: false,
-            message: "비밀번호 해쉬화에 실패",
+            message: "Hashing for password failed",
           });
         password = hash;
         const signUp = await model.signUp(id, password);
         if (signUp !== undefined && signUp.affectedRows === 1) {
-          res.send({ result: "success" });
+          res.status(200).json({ code: 200, message: "Sign up succeed" });
         } else {
-          res.send({ result: "fail" });
+          res.status(401).json({ result: "Sign up failed" });
         }
       });
     });
   } catch (err) {
-    console.log(err);
+    return res.status(500).json({
+      code: 500,
+      message: "Connection(Sign up to simple_memo) failed",
+    });
   }
 };
 
@@ -84,25 +91,15 @@ exports.regMemo = async (req, res) => {
   try {
     const regMemo = await model.regMemo(req.body);
     if (regMemo !== undefined && regMemo.affectedRows === 1) {
-      res.send({ result: "success" });
+      res.status(200).json({ code: 200, message: "Memo registration succeed" });
     } else {
-      res.send({ result: "fail" });
+      res.status(401).json({ code: 401, message: "Memo registration failed" });
     }
   } catch (err) {
-    console.log(err);
-  }
-};
-
-exports.detailMemo = async (req, res) => {
-  try {
-    const detailMemo = await model.detailMemo(req.body);
-    if (detailMemo !== undefined && detailMemo.length === 1) {
-      res.send({ result: "fail" });
-    } else {
-      res.send({ result: detailMemo }); // 후에 고쳐
-    }
-  } catch (err) {
-    console.log(err);
+    return res.status(500).json({
+      code: 500,
+      message: "Connection(Memo registration) failed",
+    });
   }
 };
 
@@ -110,12 +107,15 @@ exports.updateMemo = async (req, res) => {
   try {
     const updateMemo = await model.updateMemo(req.body);
     if (updateMemo !== undefined && updateMemo.affectedRows === 1) {
-      res.send({ result: "success" });
+      res.status(200).json({ code: 200, message: "Memo update succeed" });
     } else {
-      res.send({ result: "fail" });
+      res.status(401).json({ code: 401, message: "Memo update failed" });
     }
   } catch (err) {
-    console.log(err);
+    return res.status(500).json({
+      code: 500,
+      message: "Connection(Memo update) failed",
+    });
   }
 };
 
@@ -123,12 +123,15 @@ exports.deleteMemo = async (req, res) => {
   try {
     const deleteMemo = await model.deleteMemo(req.body);
     if (deleteMemo !== undefined && deleteMemo.affectedRows === 1) {
-      res.send({ result: "success" });
+      res.status(200).json({ code: 200, message: "Memo delete succeed" });
     } else {
-      res.send({ result: "fail" });
+      res.status(401).json({ code: 401, message: "Memo delete failed" });
     }
   } catch (err) {
-    console.log(err);
+    return res.status(500).json({
+      code: 500,
+      message: "Connection(Memo delete) failed",
+    });
   }
 };
 
@@ -136,11 +139,14 @@ exports.loadMemo = async (req, res) => {
   try {
     const loadMemo = await model.loadMemo(req.query);
     if (loadMemo !== undefined && loadMemo.length > 0) {
-      res.send({ result: loadMemo });
+      res.status(200).json({ code: 200, message: "Memo load succeed", result: loadMemo });
     } else {
-      res.send({ result: "fail" });
+      res.status(401).json({ code: 401, message: "Memo load failed" });
     }
   } catch (err) {
-    console.log(err);
+    return res.status(500).json({
+      code: 500,
+      message: "Connection(Memo load) failed",
+    });
   }
 };

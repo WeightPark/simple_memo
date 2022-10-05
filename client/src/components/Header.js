@@ -8,7 +8,7 @@ const Header = () => {
   const [cookies, removeCookie] = useCookies(["token"]);
   let navigate = useNavigate();
 
-  const LogOut = (e) => {
+  const logOut = (e) => {
     e.preventDefault();
     removeCookie("token");
     navigate("/");
@@ -31,7 +31,7 @@ const Header = () => {
       </div>
       <div className="logout-container">
         {cookies.token !== "undefined" && cookies.token !== undefined ? (
-          <button id="logout_btn" onClick={LogOut}>
+          <button id="logout_btn" onClick={logOut}>
             로그아웃
           </button>
         ) : (
